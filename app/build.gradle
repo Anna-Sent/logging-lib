@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+apply from: './scripts/artifact_naming.gradle'
+apply from: './scripts/secret.gradle'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
@@ -7,21 +10,111 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode Integer.parseInt(VERSION_CODE)
+        versionName VERSION_NAME
 
         applicationId "io.logging.sample"
+
+        buildConfigField 'String', 'LOG_TAG', '"LOGGING"'
     }
 
-    buildTypes {
+    signingConfigs {
+        debug {
+            storeFile file('debug.jks')
+            storePassword 'htQVSM3d'
+            keyAlias 'debug-key'
+            keyPassword '8mrmvU6x'
+        }
+        release {
+            storeFile getSecretKeystoreFile()
+            storePassword getSecretKeystorePassword()
+            keyAlias getSecretKeyAlias()
+            keyPassword getSecretKeyPassword()
+        }
+
+        buildTypes {
+            debug {
+                versionNameSuffix '-DEBUG'
+                applicationIdSuffix '.debug'
+                resValue "string", "app_name", "${APPLICATION_NAME}${versionNameSuffix}"
+                debuggable true
+                signingConfig signingConfigs.debug
+
+                shrinkResources false
+                minifyEnabled false
+                proguardFiles 'proguard.cfg', 'proguard-rules.pro'
+                buildConfigField 'boolean', 'ENABLE_MINIFY', "${minifyEnabled}"
+
+                ext.enableCrashlytics = false
+                buildConfigField 'boolean', 'ENABLE_CRS', 'false'
+                manifestPlaceholders += [fabricApiKey: "${FABRIC_API_KEY_QA}"]
+
+                // logging
+                buildConfigField 'boolean', 'PRINT_LOGS_TO_FILE', 'true'
+                buildConfigField 'boolean', 'PRINT_LOGS_TO_CRS', 'true'
+                buildConfigField 'boolean', 'PRINT_LOGS_TO_LOGCAT', 'true'
+                buildConfigField 'boolean', 'PRINT_SENSITIVE_DATA', 'true'
+                buildConfigField 'boolean', 'DUMP_OUT_OF_MEMORY', 'false'
+            }
+            qa {
+                versionNameSuffix '-QA'
+                applicationIdSuffix '.qa'
+                resValue "string", "app_name", "${APPLICATION_NAME}${versionNameSuffix}"
+                debuggable true
+                signingConfig signingConfigs.debug
+                matchingFallbacks = ['release', 'debug']
+
+                shrinkResources true
+                minifyEnabled true
+                proguardFiles 'proguard.cfg', 'proguard-rules.pro'
+                proguardFiles 'proguard.cfg', 'proguard-rules-qa.pro'
+                buildConfigField 'boolean', 'ENABLE_MINIFY', "${minifyEnabled}"
+
+                ext.enableCrashlytics = true
+                buildConfigField 'boolean', 'ENABLE_CRS', 'true'
+                manifestPlaceholders += [fabricApiKey: "${FABRIC_API_KEY_QA}"]
+
+                // logging
+                buildConfigField 'boolean', 'PRINT_LOGS_TO_FILE', 'true'
+                buildConfigField 'boolean', 'PRINT_LOGS_TO_CRS', 'true'
+                buildConfigField 'boolean', 'PRINT_LOGS_TO_LOGCAT', 'true'
+                buildConfigField 'boolean', 'PRINT_SENSITIVE_DATA', 'true'
+                buildConfigField 'boolean', 'DUMP_OUT_OF_MEMORY', 'false'
+            }
+            release {
+                versionNameSuffix ''
+                applicationIdSuffix ''
+                resValue "string", "app_name", "${APPLICATION_NAME}${versionNameSuffix}"
+                //debuggable true
+                signingConfig signingConfigs.release
+
+                shrinkResources true
+                minifyEnabled true
+                proguardFiles 'proguard.cfg', 'proguard-rules.pro'
+                buildConfigField 'boolean', 'ENABLE_MINIFY', "${minifyEnabled}"
+
+                ext.enableCrashlytics = false
+                buildConfigField 'boolean', 'ENABLE_CRS', 'false'
+                manifestPlaceholders += [fabricApiKey: "${FABRIC_API_KEY_RELEASE}"]
+
+                // logging
+                buildConfigField 'boolean', 'PRINT_LOGS_TO_FILE', 'false'
+                buildConfigField 'boolean', 'PRINT_LOGS_TO_CRS', 'true'
+                buildConfigField 'boolean', 'PRINT_LOGS_TO_LOGCAT', 'false'
+                buildConfigField 'boolean', 'PRINT_SENSITIVE_DATA', 'false'
+                buildConfigField 'boolean', 'DUMP_OUT_OF_MEMORY', 'false'
+            }
+        }
     }
-}
 
-dependencies {
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    dependencies {
+        implementation 'androidx.appcompat:appcompat:1.1.0'
 
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.1.0'
+        implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+        implementation 'com.google.android.material:material:1.1.0'
 
-    implementation project(':logging-library')
+        implementation project(':logging-library')
+        implementation 'org.slf4j:slf4j-api:1.7.25'
+        implementation 'com.github.tony19:logback-android:2.0.0'
+    }
 }
