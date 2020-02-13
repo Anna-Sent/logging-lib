@@ -6,6 +6,7 @@ import android.os.Environment;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+@SuppressWarnings("unused")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class DeviceUtils {
 

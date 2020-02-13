@@ -9,6 +9,7 @@ import java.util.Iterator;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+@SuppressWarnings({"WeakerAccess", "unused"})
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class StringUtils {
 

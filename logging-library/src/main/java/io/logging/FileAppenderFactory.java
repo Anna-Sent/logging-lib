@@ -32,7 +32,6 @@ class FileAppenderFactory extends AppenderFactory {
     public Appender<ILoggingEvent> getAppender(LoggerContext loggerContext, Context appContext) {
         val filesDir = isExternalStorageWritable()
                 ? appContext.getExternalFilesDir(null) : appContext.getFilesDir();
-        //noinspection ConstantConditions
         return getAppender(loggerContext, filesDir);
     }
 
