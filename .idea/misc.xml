@@ -5,6 +5,13 @@
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
+  <component name="EntryPointsManager">
+    <entry_points version="2.0">
+      <entry_point TYPE="method" FQNAME="io.logging.sample.App$1 void init(android.content.Context appContext, boolean enableCrs)" />
+    </entry_points>
+    <pattern value="io.logging.sample.App$1" method="log" />
+    <pattern value="io.logging.sample.App$1" method="report" />
+  </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>

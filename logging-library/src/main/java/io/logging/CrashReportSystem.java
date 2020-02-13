@@ -2,7 +2,7 @@ package io.logging;
 
 import android.content.Context;
 
-@SuppressWarnings("WeakerAccess")
+@SuppressWarnings({"WeakerAccess", "unused", "EmptyMethod"})
 public interface CrashReportSystem {
 
     void init(Context appContext, boolean enableCrs);

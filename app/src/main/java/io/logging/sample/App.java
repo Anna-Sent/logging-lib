@@ -19,6 +19,7 @@ import io.logging.utils.DeviceUtils;
 @SuppressWarnings("WeakerAccess")
 public class App extends Application {
 
+    @SuppressWarnings("FieldCanBeLocal")
     private Logger logger;
 
     @Override
@@ -46,6 +47,7 @@ public class App extends Application {
         Thread.setDefaultUncaughtExceptionHandler(handler);
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     private void initLogging() {
         LogSystem.initLogger(this, LogSystem.Config.builder()
                         .tag(BuildConfig.LOG_TAG)
