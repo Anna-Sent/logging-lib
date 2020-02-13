@@ -6,3 +6,5 @@
 -keepattributes *Annotation*
 
 -dontwarn ch.qos.logback.core.net.*
+
+-dontwarn javax.mail.**

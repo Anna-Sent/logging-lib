@@ -44,7 +44,7 @@ android {
 
                 shrinkResources false
                 minifyEnabled false
-                proguardFiles 'proguard.cfg', 'proguard-rules.pro'
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
                 buildConfigField 'boolean', 'ENABLE_MINIFY', "${minifyEnabled}"
 
                 manifestPlaceholders = [crashlyticsCollectionEnabled: "false"]
@@ -68,8 +68,7 @@ android {
 
                 shrinkResources true
                 minifyEnabled true
-                proguardFiles 'proguard.cfg', 'proguard-rules.pro'
-                proguardFiles 'proguard.cfg', 'proguard-rules-qa.pro'
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
                 buildConfigField 'boolean', 'ENABLE_MINIFY', "${minifyEnabled}"
 
                 manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
@@ -92,7 +91,7 @@ android {
 
                 shrinkResources true
                 minifyEnabled true
-                proguardFiles 'proguard.cfg', 'proguard-rules.pro'
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
                 buildConfigField 'boolean', 'ENABLE_MINIFY', "${minifyEnabled}"
 
                 manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
