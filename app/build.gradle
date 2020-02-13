@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'io.fabric'
 
 apply from: './scripts/artifact_naming.gradle'
 apply from: './scripts/secret.gradle'
@@ -45,13 +47,13 @@ android {
                 proguardFiles 'proguard.cfg', 'proguard-rules.pro'
                 buildConfigField 'boolean', 'ENABLE_MINIFY', "${minifyEnabled}"
 
+                manifestPlaceholders = [crashlyticsCollectionEnabled: "false"]
                 ext.enableCrashlytics = false
                 buildConfigField 'boolean', 'ENABLE_CRS', 'false'
-                manifestPlaceholders += [fabricApiKey: "${FABRIC_API_KEY_QA}"]
 
                 // logging
-                buildConfigField 'boolean', 'PRINT_LOGS_TO_FILE', 'true'
                 buildConfigField 'boolean', 'PRINT_LOGS_TO_CRS', 'true'
+                buildConfigField 'boolean', 'PRINT_LOGS_TO_FILE', 'true'
                 buildConfigField 'boolean', 'PRINT_LOGS_TO_LOGCAT', 'true'
                 buildConfigField 'boolean', 'PRINT_SENSITIVE_DATA', 'true'
                 buildConfigField 'boolean', 'DUMP_OUT_OF_MEMORY', 'false'
@@ -70,13 +72,13 @@ android {
                 proguardFiles 'proguard.cfg', 'proguard-rules-qa.pro'
                 buildConfigField 'boolean', 'ENABLE_MINIFY', "${minifyEnabled}"
 
+                manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
                 ext.enableCrashlytics = true
                 buildConfigField 'boolean', 'ENABLE_CRS', 'true'
-                manifestPlaceholders += [fabricApiKey: "${FABRIC_API_KEY_QA}"]
 
                 // logging
-                buildConfigField 'boolean', 'PRINT_LOGS_TO_FILE', 'true'
                 buildConfigField 'boolean', 'PRINT_LOGS_TO_CRS', 'true'
+                buildConfigField 'boolean', 'PRINT_LOGS_TO_FILE', 'true'
                 buildConfigField 'boolean', 'PRINT_LOGS_TO_LOGCAT', 'true'
                 buildConfigField 'boolean', 'PRINT_SENSITIVE_DATA', 'true'
                 buildConfigField 'boolean', 'DUMP_OUT_OF_MEMORY', 'false'
@@ -93,13 +95,13 @@ android {
                 proguardFiles 'proguard.cfg', 'proguard-rules.pro'
                 buildConfigField 'boolean', 'ENABLE_MINIFY', "${minifyEnabled}"
 
-                ext.enableCrashlytics = false
-                buildConfigField 'boolean', 'ENABLE_CRS', 'false'
-                manifestPlaceholders += [fabricApiKey: "${FABRIC_API_KEY_RELEASE}"]
+                manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
+                ext.enableCrashlytics = true
+                buildConfigField 'boolean', 'ENABLE_CRS', 'true'
 
                 // logging
+                buildConfigField 'boolean', 'PRINT_LOGS_TO_CRS', 'false'
                 buildConfigField 'boolean', 'PRINT_LOGS_TO_FILE', 'false'
-                buildConfigField 'boolean', 'PRINT_LOGS_TO_CRS', 'true'
                 buildConfigField 'boolean', 'PRINT_LOGS_TO_LOGCAT', 'false'
                 buildConfigField 'boolean', 'PRINT_SENSITIVE_DATA', 'false'
                 buildConfigField 'boolean', 'DUMP_OUT_OF_MEMORY', 'false'
@@ -116,5 +118,8 @@ android {
         implementation project(':logging-library')
         implementation 'org.slf4j:slf4j-api:1.7.25'
         implementation 'com.github.tony19:logback-android:2.0.0'
+
+        implementation 'com.google.firebase:firebase-analytics:17.2.2'
+        implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
     }
 }

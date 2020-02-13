@@ -3,16 +3,20 @@ package io.logging.sample;
 import android.app.Application;
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
+import io.fabric.sdk.android.Fabric;
 import io.logging.CrashReportSystem;
 import io.logging.DumpingUncaughtExceptionHandler;
 import io.logging.LogSystem;
 import io.logging.utils.DeviceUtils;
 
+@SuppressWarnings("WeakerAccess")
 public class App extends Application {
 
     private Logger logger;
@@ -54,17 +58,19 @@ public class App extends Application {
                 new CrashReportSystem() {
                     @Override
                     public void init(Context appContext, boolean enableCrs) {
-
+                        if (BuildConfig.ENABLE_CRS) {
+                            Fabric.with(appContext, new Crashlytics());
+                        }
                     }
 
                     @Override
                     public void report(Throwable throwable) {
-
+                        Crashlytics.logException(throwable);
                     }
 
                     @Override
                     public void log(String msg) {
-
+                        Crashlytics.log(msg);
                     }
                 });
         logger = LoggerFactory.getLogger(toString());
