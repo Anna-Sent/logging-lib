@@ -7,7 +7,7 @@ apply from: './scripts/secret.gradle'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+    buildToolsVersion '29.0.1'
 
     defaultConfig {
         minSdkVersion 16
@@ -15,7 +15,7 @@ android {
         versionCode Integer.parseInt(VERSION_CODE)
         versionName VERSION_NAME
 
-        applicationId "io.logging.sample"
+        applicationId 'io.logging.sample'
 
         buildConfigField 'String', 'LOG_TAG', '"LOGGING"'
     }
@@ -38,7 +38,7 @@ android {
             debug {
                 versionNameSuffix '-DEBUG'
                 applicationIdSuffix '.debug'
-                resValue "string", "app_name", "${APPLICATION_NAME}${versionNameSuffix}"
+                resValue 'string', 'app_name', "${APPLICATION_NAME}${versionNameSuffix}"
                 debuggable true
                 signingConfig signingConfigs.debug
 
@@ -47,7 +47,7 @@ android {
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
                 buildConfigField 'boolean', 'ENABLE_MINIFY', "${minifyEnabled}"
 
-                manifestPlaceholders = [crashlyticsCollectionEnabled: "false"]
+                manifestPlaceholders = [crashlyticsCollectionEnabled: 'false']
                 ext.enableCrashlytics = false
                 buildConfigField 'boolean', 'ENABLE_CRS', 'false'
 
@@ -61,7 +61,7 @@ android {
             qa {
                 versionNameSuffix '-QA'
                 applicationIdSuffix '.qa'
-                resValue "string", "app_name", "${APPLICATION_NAME}${versionNameSuffix}"
+                resValue 'string', 'app_name', "${APPLICATION_NAME}${versionNameSuffix}"
                 debuggable true
                 signingConfig signingConfigs.debug
                 matchingFallbacks = ['release', 'debug']
@@ -71,7 +71,7 @@ android {
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
                 buildConfigField 'boolean', 'ENABLE_MINIFY', "${minifyEnabled}"
 
-                manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
+                manifestPlaceholders = [crashlyticsCollectionEnabled: 'true']
                 ext.enableCrashlytics = true
                 buildConfigField 'boolean', 'ENABLE_CRS', 'true'
 
@@ -85,7 +85,7 @@ android {
             release {
                 versionNameSuffix ''
                 applicationIdSuffix ''
-                resValue "string", "app_name", "${APPLICATION_NAME}${versionNameSuffix}"
+                resValue 'string', 'app_name', "${APPLICATION_NAME}${versionNameSuffix}"
                 //debuggable true
                 signingConfig signingConfigs.release
 
@@ -94,7 +94,7 @@ android {
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
                 buildConfigField 'boolean', 'ENABLE_MINIFY', "${minifyEnabled}"
 
-                manifestPlaceholders = [crashlyticsCollectionEnabled: "true"]
+                manifestPlaceholders = [crashlyticsCollectionEnabled: 'true']
                 ext.enableCrashlytics = true
                 buildConfigField 'boolean', 'ENABLE_CRS', 'true'
 
