@@ -58,6 +58,7 @@ public class App extends Application {
                         .printSensitiveData(BuildConfig.PRINT_SENSITIVE_DATA)
                         .build(),
                 new CrashReportSystem() {
+                    @SuppressWarnings("unused")
                     @Override
                     public void init(Context appContext, boolean enableCrs) {
                         if (BuildConfig.ENABLE_CRS) {
@@ -65,11 +66,13 @@ public class App extends Application {
                         }
                     }
 
+                    @SuppressWarnings("unused")
                     @Override
                     public void report(Throwable throwable) {
                         Crashlytics.logException(throwable);
                     }
 
+                    @SuppressWarnings("unused")
                     @Override
                     public void log(String msg) {
                         Crashlytics.log(msg);
